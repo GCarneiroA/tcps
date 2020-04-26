@@ -1,3 +1,7 @@
+
+
+// http://www.linuxhowtos.org/C_C++/socket.htm
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
