@@ -6,14 +6,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+
+#include <string>
 #include <string.h>
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include <time.h> 
+#include <time.h>
  
 #define MYPORT 3490    // the port users will be connecting to
 #define BACKLOG 10    // how many pending connections queue will hold
@@ -29,10 +32,15 @@ struct RTUDATA
 {
     unsigned short tagid;
     unsigned char flag;
+    
+    //size_t nameSize;
+    char name[20];
+
     float value;
     time_t time_stamp;
 };
 #pragma pack(0)
+
 
 int main(void)
 {
@@ -48,13 +56,25 @@ int main(void)
     int n=0;
     //time_t ticks = 0;
 
+/*
     struct RTUDATA rtu = {
-        10,
-        'y',
-        33.3,
-        0
+        10,                     // tag
+        'y',                    // flag
+        'x',                    // name
+        33.3,                   // value
+        0                       // time
     };
-    
+*/
+    struct RTUDATA rtu;
+    rtu.tagid = 10;
+    rtu.flag = 'y';
+
+    strcpy(rtu.name, "Gustavo");
+
+    rtu.value = 33.3;
+    rtu.time_stamp = 0;
+
+
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("socket");
         exit(1);

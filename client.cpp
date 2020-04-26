@@ -13,8 +13,8 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#define PORT 3490 // the port client will be connecting to
-#define MAXDATASIZE 1024 // max number of bytes we can get at once
+#define PORT 3490           // the port client will be connecting to
+#define MAXDATASIZE 1024    // max number of bytes we can get at once
 
 int main(int argc, char *argv[])
 {
@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
     {
         unsigned short tagid;
         unsigned char flag;
+        char name[20];
         float value;
         time_t time_stamp;
     };
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
     // std::cout << "Struct reveived size is = " << sizeof( )
     std::cout << "tagId: " << rtu.tagid << std::endl;
     std::cout << "flag: " << rtu.flag << std::endl;
+    std::cout << "name: " << rtu.name << std::endl;
     std::cout << "value: " << rtu.value << std::endl;
     std::cout << "time_stamp: " << rtu.time_stamp << std::endl;
 
