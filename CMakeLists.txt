@@ -5,3 +5,5 @@ project(tcps)
 
 add_executable(tcps server.cpp)
 add_executable(tcpc client.cpp)
+add_executable(endians endians.cpp)
+add_executable(sizes sizes.cpp)

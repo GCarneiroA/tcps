@@ -53,16 +53,14 @@ int main(int argc, char *argv[])
     exit(1);
     }
     */
-    #pragma pack(1)
     struct recvrtu
     {
-        unsigned short tagid;
+        unsigned int tagid;
         unsigned char flag;
         char name[20];
         float value;
         time_t time_stamp;
     };
-    #pragma pack(0)
 
     struct recvrtu rtu;
     
@@ -84,7 +82,7 @@ int main(int argc, char *argv[])
     std::cout << "value: " << rtu.value << std::endl;
     std::cout << "time_stamp: " << rtu.time_stamp << std::endl;
 
-
+    
     // printf("%d :: %c :: %d :: %s",ntohs(rtu.tagid),rtu.flag,ntohs(rtu.value),rtu.time_stamp);
     
     

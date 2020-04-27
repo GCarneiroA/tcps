@@ -27,10 +27,9 @@ void sigchld_handler(int s)
 }
  
 // Structure to be sent over TCP Socket
-#pragma pack(1)
 struct RTUDATA
 {
-    unsigned short tagid;
+    unsigned int tagid;
     unsigned char flag;
     
     //size_t nameSize;
@@ -39,7 +38,6 @@ struct RTUDATA
     float value;
     time_t time_stamp;
 };
-#pragma pack(0)
 
 
 int main(void)
@@ -66,7 +64,9 @@ int main(void)
     };
 */
     struct RTUDATA rtu;
-    rtu.tagid = 10;
+    //rtu.tagid = htons(5102350);
+    rtu.tagid = 0x12345678;
+                //ntohs(0x12345678);
     rtu.flag = 'y';
 
     strcpy(rtu.name, "Gustavo");
