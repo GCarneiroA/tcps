@@ -12,7 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <thread>
+//#include <thread>
 
 std::vector<std::string> handleRequest(std::string request)
 {
