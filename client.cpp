@@ -13,13 +13,17 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
+#include "header.h"
+#include "endianness.h"
+
 #define PORT 3490           // the port client will be connecting to
 #define MAXDATASIZE 1024    // max number of bytes we can get at once
 
 int main(int argc, char *argv[])
 {
-    int sockfd, numbytes;
-    char buf[MAXDATASIZE];
+    int sockfd;
+    //int numbytes;
+    //char buf[MAXDATASIZE];
  
     struct hostent *he;
     struct sockaddr_in their_addr; // connector’s (Sender's) address information
@@ -53,16 +57,9 @@ int main(int argc, char *argv[])
     exit(1);
     }
     */
-    struct recvrtu
-    {
-        unsigned int tagid;
-        unsigned char flag;
-        char name[20];
-        float value;
-        time_t time_stamp;
-    };
+    
 
-    struct recvrtu rtu;
+    struct RTUDATA rtu;
     
     //RECEIVING DATA
     //n = recvfrom(sock, &pkt, sizeof(struct packet), 0, (struct sockaddr *)&from, &fromlen);
@@ -70,19 +67,20 @@ int main(int argc, char *argv[])
     
     socklen_t fromLen = sizeof(their_addr);
 
-    if (recvfrom(sockfd, (struct recvrtu *)&rtu, sizeof(rtu), 0,  (struct sockaddr *)&their_addr, &fromLen) == -1) {
+    if (recvfrom(sockfd, (struct RTUDATA *)&rtu, sizeof(rtu), 0,  (struct sockaddr *)&their_addr, &fromLen) == -1) {
         perror("recv");
         exit(1);
     }
-    
-    // std::cout << "Struct reveived size is = " << sizeof( )
-    std::cout << "tagId: " << rtu.tagid << std::endl;
-    std::cout << "flag: " << rtu.flag << std::endl;
-    std::cout << "name: " << rtu.name << std::endl;
-    std::cout << "value: " << rtu.value << std::endl;
-    std::cout << "time_stamp: " << rtu.time_stamp << std::endl;
 
+    // fix byte order
+    uint8_t x = ntoh8(rtu.x);
+    uint32_t y = ntoh32(rtu.y);
     
+    std::cout << "Struct reveived size is = " << sizeof(rtu) << std::endl;
+
+    std::cout << "x: " << unsigned(x) << std::endl;    
+    std::cout << "y: " << y << std::endl;
+
     // printf("%d :: %c :: %d :: %s",ntohs(rtu.tagid),rtu.flag,ntohs(rtu.value),rtu.time_stamp);
     
     

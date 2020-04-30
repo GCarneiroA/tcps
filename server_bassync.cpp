@@ -54,6 +54,7 @@ public:
     void handle_read(const boost::system::error_code &err, size_t bytes_transferred)
     {
         if (!err) {
+            // Dados recebidos podem ser tratados aqui
             cout << data << endl;
         } else {
             std::cerr << "Error: " << err.message() << std::endl;
@@ -64,6 +65,7 @@ public:
     void handle_write(const boost::system::error_code &err, size_t bytes_transferred)
     {
         if (!err) {
+            // Dados a serem enviados devem chegar aqui
             cout << "Server sent Hello message!" << endl;
         } else {
             std::cerr << "error: " << err.message() << endl;

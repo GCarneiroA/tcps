@@ -17,28 +17,17 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <time.h>
+
+#include "header.h"
+#include "endianness.h"
  
 #define MYPORT 3490    // the port users will be connecting to
 #define BACKLOG 10    // how many pending connections queue will hold
- 
+
 void sigchld_handler(int s)
 {
     while(wait(NULL) > 0);
 }
- 
-// Structure to be sent over TCP Socket
-struct RTUDATA
-{
-    unsigned int tagid;
-    unsigned char flag;
-    
-    //size_t nameSize;
-    char name[20];
-
-    float value;
-    time_t time_stamp;
-};
-
 
 int main(void)
 {
@@ -48,32 +37,11 @@ int main(void)
     socklen_t sin_size;
     struct sigaction sa;
     int yes=1;
-
-    //char *str="Hello 4rm_MTU!\n";
- 
     int n=0;
-    //time_t ticks = 0;
 
-/*
-    struct RTUDATA rtu = {
-        10,                     // tag
-        'y',                    // flag
-        'x',                    // name
-        33.3,                   // value
-        0                       // time
-    };
-*/
     struct RTUDATA rtu;
-    //rtu.tagid = htons(5102350);
-    rtu.tagid = 0x12345678;
-                //ntohs(0x12345678);
-    rtu.flag = 'y';
-
-    strcpy(rtu.name, "Gustavo");
-
-    rtu.value = 33.3;
-    rtu.time_stamp = 0;
-
+    rtu.x = 17;
+    rtu.y = hton32(2924);
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("socket");
@@ -118,7 +86,7 @@ int main(void)
  
         printf("server: got connection from %s\n",inet_ntoa(their_addr.sin_addr));
  
-        printf("Data to be transferred is: %d\n",sizeof(rtu));
+        //printf("Data to be transferred is: %d\n", (int*)sizeof(rtu));
  
         if (!fork()) {        // this is the child process
             close(sockfd);    // child doesn’t need the listener
@@ -126,7 +94,6 @@ int main(void)
             if (send(new_fd, str, 15, 0) == -1)
                 perror("send");
             */
-           rtu.time_stamp = time(NULL);
            n = sendto(new_fd, &rtu, sizeof(struct RTUDATA), 0, (struct sockaddr *)&their_addr, sizeof(their_addr));
                    
             // n=send(new_fd,(void *) &rtu ,sizeof(rtu), 0);
@@ -165,7 +132,7 @@ int main(void)
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-/*
+
 volatile sig_atomic_t gGracefulShutdown = 0;
 volatile sig_atomic_t gCaughtHupSignal = 0;
 
