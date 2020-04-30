@@ -28,6 +28,30 @@ void sigchld_handler(int s)
 {
     while(wait(NULL) > 0);
 }
+<<<<<<< HEAD
+=======
+ 
+// Structure to be sent over TCP Socket
+/*
+struct RTUDATA
+{
+    unsigned int tagid;
+    unsigned char flag;
+
+    char name[20];
+
+    float value;
+    time_t time_stamp;
+};
+*/
+
+struct RTUDATA
+{
+    uint8_t x;
+    uint32_t y;
+} __attribute__((packed));
+
+>>>>>>> 1c903e2... server: update structure
 
 int main(void)
 {
@@ -40,8 +64,14 @@ int main(void)
     int n=0;
 
     struct RTUDATA rtu;
+<<<<<<< HEAD
     rtu.x = 17;
     rtu.y = hton32(2924);
+=======
+
+    rtu.x = (uint8_t)17;
+    rtu.y = htonl(2924);
+>>>>>>> 1c903e2... server: update structure
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("socket");
@@ -94,6 +124,10 @@ int main(void)
             if (send(new_fd, str, 15, 0) == -1)
                 perror("send");
             */
+<<<<<<< HEAD
+=======
+           //rtu.time_stamp = time(NULL);
+>>>>>>> 1c903e2... server: update structure
            n = sendto(new_fd, &rtu, sizeof(struct RTUDATA), 0, (struct sockaddr *)&their_addr, sizeof(their_addr));
                    
             // n=send(new_fd,(void *) &rtu ,sizeof(rtu), 0);
