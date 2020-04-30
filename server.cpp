@@ -94,10 +94,6 @@ int main(void)
             if (send(new_fd, str, 15, 0) == -1)
                 perror("send");
             */
-<<<<<<< HEAD
-=======
-           //rtu.time_stamp = time(NULL);
->>>>>>> 1c903e2... server: update structure
            n = sendto(new_fd, &rtu, sizeof(struct RTUDATA), 0, (struct sockaddr *)&their_addr, sizeof(their_addr));
                    
             // n=send(new_fd,(void *) &rtu ,sizeof(rtu), 0);
