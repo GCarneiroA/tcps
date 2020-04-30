@@ -40,7 +40,7 @@ int main(void)
     int n=0;
 
     struct RTUDATA rtu;
-    rtu.x = 17;
+    rtu.x = hton8(17);
     rtu.y = hton32(2924);
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
