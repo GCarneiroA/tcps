@@ -1,5 +1,5 @@
-#ifndef BYTEORDER_H
-#define BYTEORDER_H
+#ifndef SWAP_H
+#define SWAP_H
 
 #include <cstdio>
 #include <type_traits>
@@ -34,4 +34,4 @@ constexpr auto swap_bytes(T x) -> T
     return ByteOrder<T, sizeof(T)>::swap(x);
 }
 
-#endif
+#endif      // SWAP_H
